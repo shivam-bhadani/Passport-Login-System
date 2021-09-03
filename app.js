@@ -113,4 +113,4 @@ function checkNotAuthenticated(req, res, next) {
     next();
 }
 
-app.listen(4500, () => console.log("Listening to Port 4500"))
+app.listen(process.env.PORT || 4500, () => console.log("Listening to Port 4500"))
