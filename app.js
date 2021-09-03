@@ -41,7 +41,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 30 * 1000 * 60 * 60 },
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost/loginSystem' })
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL })
 }));
 
 app.use(passport.initialize());
