@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const methodOverride = require('method-override');
@@ -39,9 +38,7 @@ app.use(methodOverride('_method'))
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 30 * 1000 * 60 * 60 },
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL })
+    saveUninitialized: true
 }));
 
 app.use(passport.initialize());
@@ -103,14 +100,16 @@ function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/login');
+    else
+        res.redirect('/login');
 }
 
 function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return res.redirect('/secret');
     }
-    next();
+    else
+        next();
 }
 
 app.listen(process.env.PORT || 4500, () => console.log("Listening to Port 4500"))
